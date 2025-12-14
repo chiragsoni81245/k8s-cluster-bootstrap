@@ -6,7 +6,7 @@ echo "[INFO] Kubernetes node bootstrap started..."
 #-----------------------------
 # Variables
 #-----------------------------
-K8S_VERSION="1.29"
+K8S_VERSION="1.33"
 CONTAINERD_CONFIG="/etc/containerd/config.toml"
 
 #-----------------------------
@@ -101,6 +101,9 @@ apt-mark hold kubelet kubeadm kubectl
 
 systemctl enable kubelet
 
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo 'alias k=kubectl' >>~/.bashrc
+
 #-----------------------------
 # Final checks
 #-----------------------------
@@ -118,7 +121,7 @@ echo
 echo "Next steps:"
 echo
 echo "Control-plane:"
-echo "  kubeadm init --pod-network-cidr=10.244.0.0/16"
+echo "  kubeadm init --pod-network-cidr=172.16.0.0/24"
 echo
 echo "Worker node:"
 echo "  kubeadm join <MASTER_IP>:6443 --token <TOKEN> --discovery-token-ca-cert-hash sha256:<HASH>"
