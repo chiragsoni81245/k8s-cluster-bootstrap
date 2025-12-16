@@ -157,10 +157,6 @@ initialize_control_plane() {
     --apiserver-advertise-address="$APISERVER_IP" \
     --pod-network-cidr="$POD_CIDR" \
     --service-cidr="$SERVICE_CIDR"
-
-
-  log "Use following command join worker nodes in this cluster"
-  log "  $(kubeadm token create --print-join-command)"
 }
 
 configure_kubectl_access() {
@@ -223,6 +219,9 @@ setup_control_plane() {
   initialize_control_plane
   configure_kubectl_access
   install_cilium_cni
+
+  log "Use following command join worker nodes in this cluster"
+  log "  $(kubeadm token create --print-join-command)"
 }
 
 setup_worker_node() {
